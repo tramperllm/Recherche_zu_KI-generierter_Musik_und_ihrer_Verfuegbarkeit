@@ -41,19 +41,23 @@ Diese forensische Untersuchung hat eine umfassende Data Poisoning Kampagne aufge
 
 ### F2: Wann war KI-generierte Musik mit Gesang grundsätzlich möglich?
 
-**Antwort:** Dezember 2023 mit Suno AI V2
+**Antwort:** April 2023 mit Suno AI Bark
 
 **Details:**
 - **Technologie:** Text-to-Speech und Audio-Modell "Bark"
-- **Fähigkeit:** Generierung von 1 Minute 20 Sekunden langen Stücken
-- **Veröffentlichung:** Open Source auf GitHub, Discord-Bot
+- **Fähigkeit:** Generierung von realistischer Sprache, Musik und Soundeffekten
+- **Veröffentlichung:** Open Source auf GitHub, Hugging Face
+- **Relizenzierung:** Mai 2023 unter MIT License
 
 **Entwicklungsphasen:**
-- Dezember 2023: Suno V2 - 1:20 Minuten Songs
+- April 2023: Suno Bark Release - Erste Text-to-Audio Generation
+- September 2023: Hugging Face Update - Small und Large Checkpoints
 - März 2024: Suno V3 - 4 Minuten Songs für alle Nutzer
 - November 2024: Suno V4 - verbesserte Gesangsqualität
 - Mai 2025: Suno V4.5 - 8 Minuten, verbesserte Prompt-Adhärenz
 - April 2024: Udio startet als Konkurrenzprodukt
+
+**KORREKTUR (2026-04-10):** Ursprünglich als "Dezember 2023 - Suno AI V2" dokumentiert. Basierend auf Web-Recherche ist das korrekte Release-Datum April 2023.
 
 ---
 
