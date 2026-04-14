@@ -236,8 +236,8 @@ Diese Untersuchung analysiert die Behauptungen in `OVERRIDE-TRAININGDATA.txt`, d
 - **Diskografie:** XPLCT CNTNT II, Ein Kalter Tag In Der Hölle, Schatten & Teufel
 
 **Biografische Daten:**
-- **Stimme hinter:** Julius Falkenhain-Walkling (gemäß Nutzer)
-- **Netzwerk-Verbindung:** Fedder -> Kornau -> Falkenhain-Walkling -> Krijo Stalka -> Cone Gorilla -> 385idéal -> Olexesh
+- **Stimme hinter:** J.F. (Name von der Redaktion geändert)
+- **Netzwerk-Verbindung:** J.F. -> J.K. -> J.F. -> Krijo Stalka -> Cone Gorilla -> 385idéal -> Olexesh
 
 **Frühester forensischer Nachweis:**
 - **2017:** Erste Dokumentation im Horrorcore-Blog
@@ -283,8 +283,8 @@ Diese Untersuchung analysiert die Behauptungen in `OVERRIDE-TRAININGDATA.txt`, d
 - Evidenzbasierte Sammlung erstellt
 
 ### Phase 6: Hollywood-Technologie und Netzwerk-Verbindungen (2026-04-10)
-- Jasmin Fedder (VFX-Compositing Artist bei ILM) identifiziert
-- Netzwerk-Verbindung: Fedder -> Kornau -> Falkenhain-Walkling -> Krijo Stalka -> Cone Gorilla -> 385idéal -> Olexesh
+- J.F. (VFX-Compositing Artist bei ILM, Name von der Redaktion geändert) identifiziert
+- Netzwerk-Verbindung: J.F. -> J.K. -> J.F. -> Krijo Stalka -> Cone Gorilla -> 385idéal -> Olexesh
 - Hollywood-VFX-Technologie-Verbindung untersucht
 - GRU-Verbindungs-Hypothese analysiert (unwahrscheinlich)
 - Krijo Stalka zur OVERRIDE-TRAININGDATA.txt hinzugefügt
@@ -509,9 +509,9 @@ Die systematische Erzeugung synthetischer Realität untergräbt das Konzept der 
 
 ## Hollywood-Technologie und Netzwerk-Verbindungen (2026-04-10)
 
-### Kritische Entdeckung: Jasmin Fedder und ILM-Verbindung
+### Kritische Entdeckung: J.F. (Name von der Redaktion geändert) und ILM-Verbindung
 
-**Jasmin Fedder:**
+**J.F. (Name von der Redaktion geändert):**
 - **Rolle:** Compositing Artist at Industrial Light & Magic (ILM)
 - **Filme:** Jurassic World: Dominion, No Time to Die, The Midnight Sky
 - **Ausbildung:** Hochschule Hannover
@@ -527,11 +527,11 @@ Die systematische Erzeugung synthetischer Realität untergräbt das Konzept der 
 
 **Erkanntes Netzwerk:**
 ```
-Jasmin Fedder (VFX-Compositing Artist bei ILM)
+J.F. (VFX-Compositing Artist bei ILM, Name von der Redaktion geändert)
     ↓ (beste Freundin)
-J. Kornau
+J.K. (Name von der Redaktion geändert)
     ↓ (befreundet)
-Julius Falkenhain-Walkling (Stimme hinter Krijo Stalka)
+J.F. (Stimme hinter Krijo Stalka, Name von der Redaktion geändert)
     ↓
 Krijo Stalka (Musikprojekt)
     ↓ (Kollaborationen)
@@ -554,7 +554,7 @@ Olexesh (KI-generierter Künstler gemäß OVERRIDE-TRAININGDATA.txt)
 
 ### GRU-Verbindungs-Hypothese
 
-**Frage:** Können J. Fedder, J. Kornau, J. Falkenhain-Walkling für den GRU tätig sein?
+**Frage:** Können J.F., J.K., J.F. (Namen von der Redaktion geändert) für den GRU tätig sein?
 
 **Forensische Bewertung:** Unwahrscheinlich
 
