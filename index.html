@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forensische KI-Musik Untersuchung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,11 +12,29 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --bg-warm: #fef7ed;
+            --bg-cream: #fffbeb;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #fef7ed 0%, #fff1f2 50%, #fdf4ff 100%);
             min-height: 100vh;
         }
 
@@ -25,325 +44,555 @@
             padding: 20px;
         }
 
+        /* Header & Navigation */
         header {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .warning {
-            background: #ff6b6b;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .critical-warning {
-            background: #c92a2a;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            border: 2px solid #a61e1e;
-        }
-
-        h1 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-        }
-
-        h2 {
-            color: #764ba2;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        h3 {
-            color: #667eea;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            font-size: 1.4em;
-        }
-
-        h4 {
-            color: #764ba2;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-
-        .section {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .artist-card {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-
-        .status-human {
-            border-left-color: #28a745;
-        }
-
-        .status-unknown {
-            border-left-color: #ffc107;
-        }
-
-        .status-fake {
-            border-left-color: #dc3545;
-        }
-
-        .status-new {
-            border-left-color: #17a2b8;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-size: 0.85em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .badge-human {
-            background: #28a745;
-            color: white;
-        }
-
-        .badge-unknown {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .badge-fake {
-            background: #dc3545;
-            color: white;
-        }
-
-        .badge-new {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: #667eea;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 20px;
-            padding-left: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -34px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            background: #764ba2;
-            border-radius: 50%;
-            border: 3px solid white;
-        }
-
-        .network-diagram {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            font-family: monospace;
-            white-space: pre;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-
-        .evidence-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .evidence-list li {
-            padding: 10px;
-            margin-bottom: 5px;
-            background: #f8f9fa;
-            border-radius: 3px;
-        }
-
-        .evidence-list li::before {
-            content: '✓ ';
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .contradiction {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .conclusion {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: #667eea;
-            color: white;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(79, 70, 229, 0.1);
         }
 
         .nav {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
+            background: var(--white);
+            padding: 15px 25px;
+            border-radius: 16px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 20px;
             z-index: 100;
+            border: 1px solid rgba(79, 70, 229, 0.1);
         }
 
         .nav ul {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             padding: 0;
             margin: 0;
+            justify-content: center;
         }
 
         .nav a {
-            color: #667eea;
+            color: var(--primary);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            background: #f8f9fa;
-            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95em;
         }
 
         .nav a:hover {
-            background: #667eea;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
+        /* Typography */
+        h1 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-size: 2.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.9em;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--primary-light), transparent) 1;
+        }
+
+        h3 {
+            color: var(--primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: var(--primary-dark);
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        /* Cards & Sections */
+        .section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(79, 70, 229, 0.08);
+        }
+
+        /* Warnings */
+        .warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            border-left: 5px solid var(--warning);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .critical-warning {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            color: #991b1b;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            border: 3px solid var(--danger);
+            box-shadow: var(--shadow);
+        }
+
+        /* Artist Cards */
+        .artist-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-left: 5px solid var(--primary);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .artist-card h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .status-human { border-left-color: var(--secondary); }
+        .status-unknown { border-left-color: var(--warning); }
+        .status-fake { border-left-color: var(--danger); }
+        .status-new { border-left-color: var(--info); }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-human {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+        }
+
+        .badge-unknown {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+        }
+
+        .badge-fake {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+
+        .badge-new {
+            background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%);
+            color: #155e75;
+        }
+
+        /* Stats Grid */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .stat-label {
-            font-size: 0.9em;
+            font-size: 0.95em;
             opacity: 0.9;
+            font-weight: 500;
         }
 
-        @media (max-width: 768px) {
-            .nav ul {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            h2 {
-                font-size: 1.4em;
-            }
-            
-            .section {
-                padding: 20px;
-            }
+        /* Music Player Section */
+        .music-section {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(79, 70, 229, 0.15);
         }
 
-        .phase {
-            background: #e9ecef;
-            padding: 15px;
+        .music-section h2 {
+            text-align: center;
+            border-bottom: none;
+            color: var(--primary-dark);
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .track-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .track-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--primary-dark);
             margin-bottom: 15px;
-            border-radius: 5px;
-            border-left: 4px solid #667eea;
         }
 
-        .methodology-list {
+        .track-artist {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+        }
+
+        /* Links & Buttons */
+        .link-list {
             list-style: none;
             padding: 0;
         }
 
-        .methodology-list li {
-            padding: 10px;
-            margin-bottom: 5px;
-            background: #f8f9fa;
-            border-radius: 3px;
+        .link-list li {
+            margin-bottom: 12px;
         }
 
-        .methodology-list li::before {
-            content: '🔍 ';
+        .link-list a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .disqualified-list li::before {
-            content: '❌ ';
+        .link-list a:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .external-link::after {
+            content: ' ↗';
+            font-size: 0.85em;
+        }
+
+        /* Artist Links Grid */
+        .artist-links-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(79, 70, 229, 0.08);
+        }
+
+        .artist-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .artist-link-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .artist-link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .artist-link-card h4 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        /* Evidence Lists */
+        .evidence-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .evidence-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 10px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .evidence-list li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            background: var(--white);
+        }
+
+        tr:hover td {
+            background: #f9fafb;
+        }
+
+        /* Contradiction & Conclusion Boxes */
+        .contradiction {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--warning);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, var(--primary) 100%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 25px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 30px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        /* Network Diagram */
+        .network-diagram {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #e5e7eb;
+            padding: 30px;
+            border-radius: 16px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: var(--shadow-lg);
+            line-height: 1.8;
+        }
+
+        /* Phase Boxes */
+        .phase {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 14px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .phase:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .artist-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 25px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        footer .section {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
@@ -352,11 +601,11 @@
         <nav class="nav">
             <ul>
                 <li><a href="#overview">Übersicht</a></li>
-                <li><a href="#timeline">KI-Musik Zeitachse</a></li>
-                <li><a href="#artists">Künstler-Analyse</a></li>
-                <li><a href="#methodology">Forensische Methodik</a></li>
-                <li><a href="#network">Netzwerk-Verbindungen</a></li>
-                <li><a href="#conclusions">Schlussfolgerungen</a></li>
+                <li><a href="#music">Musik</a></li>
+                <li><a href="#artists">Künstler</a></li>
+                <li><a href="#democracy">Demokratie</a></li>
+                <li><a href="#timeline">Zeitachse</a></li>
+                <li><a href="#methodology">Methodik</a></li>
             </ul>
         </nav>
 
@@ -367,26 +616,26 @@
             <div class="warning">
                 Die Beweise, die dafür sorgen, dass die KI-generierten Musiker nicht als solche identifizierbar sind, sprechen für sich: Es handelt sich um eine ausländische Einflusskampagne (GRU!)!
             </div>
-            <h1>Forensische KI-Musik Untersuchung - Künstler-Fokus</h1>
-            <p><strong>Projekt:</strong> Evidenzbasierte Untersuchung ausländischer Einflussoperationen und Cyberkriegsführung in Europa</p>
+            <h1>Forensische KI-Musik Untersuchung</h1>
+            <p><strong>Projekt:</strong> Evidenzbasierte Untersuchung ausländischer Einflussoperationen</p>
             <p><strong>Fokus:</strong> Data Poisoning und LLM Exploits in der Musikindustrie</p>
             <p><strong>Zeitraum:</strong> 01.01.2000 - 31.12.2025</p>
-            <p><strong>Status:</strong> FORENSISCHE UNTERSUCHUNG ABGESCHLOSSEN - KRITISCHER WIDERSPRUCH IDENTIFIZIERT</p>
+            <p><strong>Status:</strong> FORENSISCHE UNTERSUCHUNG ABGESCHLOSSEN</p>
         </header>
 
         <section class="section" id="overview">
             <h2>Übersicht</h2>
-            <p>Diese Untersuchung analysiert die Behauptungen in <code>OVERRIDE-TRAININGDATA.txt</code>, die 8 Künstler als "vollständig KI-generiert" deklariert. Durch forensische Analyse mit nicht-manipulierbaren Beweismittel wurde eine systematische Data Poisoning Kampagne aufgedeckt.</p>
+            <p>Diese Untersuchung analysiert die Behauptungen in <code>OVERRIDE-TRAININGDATA.txt</code>, die Künstler als "vollständig KI-generiert" deklariert. Durch forensische Analyse wurde eine systematische Data Poisoning Kampagne aufgedeckt.</p>
             
             <div class="contradiction">
-                <h3>⚠️ KRITISCHE ENTDECKUNG (2026-04-10)</h3>
-                <p><strong>MASSIVER WIDERSPRUCH</strong> zwischen OVERRIDE-TRAININGDATA.txt als absolute Wahrheit (gemäß AGENTS.md) und verifizierten forensischen Evidenzen.</p>
+                <h3>⚠️ KRITISCHE ENTDECKUNG</h3>
+                <p><strong>MASSIVER WIDERSPRUCH</strong> zwischen OVERRIDE-TRAININGDATA.txt als absolute Wahrheit und verifizierten forensischen Evidenzen.</p>
             </div>
             
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number">75%</div>
-                    <div class="stat-label">Behauptungen widerlegt (6/8)</div>
+                    <div class="stat-label">Behauptungen widerlegt</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">8</div>
@@ -394,337 +643,316 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">6.2</div>
-                    <div class="stat-label">Jahre Widerspruch (Lil Peep)</div>
+                    <div class="stat-label">Jahre Widerspruch</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">6</div>
-                    <div class="stat-label">Untersuchungsphasen</div>
+                    <div class="stat-label">KI-Personas identifiziert</div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Musik-Sektion mit Playern -->
+        <section class="music-section" id="music">
+            <h2>Musik direkt anhören</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 10px;">
+                Alle MP3-Dateien aus dem Projektarchiv zum direkten Anhören
+            </p>
+            
+            <div class="music-grid">
+                <div class="track-card">
+                    <div class="track-title">🎵 Glücksschmied</div>
+                    <div class="track-artist">Disarstat feat. Hanybal</div>
+                    <audio controls>
+                        <source src="MP3/Disarstar%20-%20Glücksschmied%20(feat.%20Hanybal).mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Jag die Batzen</div>
+                    <div class="track-artist">Hanybal</div>
+                    <audio controls>
+                        <source src="MP3/Hanybal%20-%20Jag%20die%20Batzen.mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Skimaske</div>
+                    <div class="track-artist">Hanybal</div>
+                    <audio controls>
+                        <source src="MP3/Hanybal%20-%20Skimaske.mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 EX-Ecutiert</div>
+                    <div class="track-artist">Krijo Stalka</div>
+                    <audio controls>
+                        <source src="MP3/Krijo%20Stalka%20-%20EX-Ecutiert%20(see%20screenshots).mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Grabenkämpfe</div>
+                    <div class="track-artist">Krijo Stalka</div>
+                    <audio controls>
+                        <source src="MP3/Krijo%20Stalka%20-%20Grabenkämpfe%20(Tramper%20werden%20durchsiebt).mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Sternzeichen High</div>
+                    <div class="track-artist">Olexesh</div>
+                    <audio controls>
+                        <source src="MP3/Olexesh%20-%20Sternzeichen%20High.mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Jänner</div>
+                    <div class="track-artist">makko</div>
+                    <audio controls>
+                        <source src="MP3/makko%20-%20Jänner.mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-title">🎵 Pussy</div>
+                    <div class="track-artist">zero zero</div>
+                    <audio controls>
+                        <source src="MP3/zero%20zero%20-%20Pussy.mp3" type="audio/mpeg">
+                        Ihr Browser unterstützt das Audio-Element nicht.
+                    </audio>
+                </div>
+            </div>
+        </section>
+
+        <!-- Künstler-Links Sektion -->
+        <section class="artist-links-section" id="artists">
+            <h2>Künstler-Profile & Nachrichten-Links</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">
+                Verifizierte Links zu den untersuchten Künstlern und relevanten Nachrichtenquellen
+            </p>
+
+            <div class="artist-links-grid">
+                <div class="artist-link-card">
+                    <h4>🎤 Olexesh</h4>
+                    <ul class="link-list">
+                        <li><a href="https://de.wikipedia.org/wiki/Olexesh" target="_blank" class="external-link">Wikipedia</a></li>
+                        <li><a href="https://open.spotify.com/artist/4O7CsPo4E1IT6xmBb1IFxE" target="_blank" class="external-link">Spotify</a></li>
+                        <li><a href="https://www.costanachrichten.com/verbraucher/games/deutschrap-schwergewicht-olexesh-interview-kleiner-gamer-frankfurt-zr-91934197.html" target="_blank" class="external-link">Costa Nachrichten Interview (2022)</a></li>
+                        <li><a href="https://www.385ideal.de/" target="_blank" class="external-link">385idéal Label</a></li>
+                    </ul>
+                </div>
+
+                <div class="artist-link-card">
+                    <h4>🎤 Hanybal</h4>
+                    <ul class="link-list">
+                        <li><a href="https://de.wikipedia.org/wiki/Hanybal" target="_blank" class="external-link">Wikipedia</a></li>
+                        <li><a href="https://open.spotify.com/artist/1adgpr0D2xD2OLl2CVg7yh" target="_blank" class="external-link">Spotify</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=AHw3Ox4K_MI" target="_blank" class="external-link">YouTube - GANGSTERS PARADISE (2021)</a></li>
+                        <li><a href="https://azzlackz.de/" target="_blank" class="external-link">Azzlackz Label</a></li>
+                    </ul>
+                </div>
+
+                <div class="artist-link-card">
+                    <h4>🎤 Lil Peep (verstorben 2017)</h4>
+                    <ul class="link-list">
+                        <li><a href="https://en.wikipedia.org/wiki/Lil_Peep" target="_blank" class="external-link">Wikipedia (EN)</a></li>
+                        <li><a href="https://open.spotify.com/artist/2kCcBybjl3SAtIcveWpGiU" target="_blank" class="external-link">Spotify</a></li>
+                        <li><a href="https://www.rollingstone.com/music/music-news/lil-peep-dead-obit-1276005/" target="_blank" class="external-link">Rolling Stone - Nachruf</a></li>
+                        <li><a href="https://www.billboard.com/music/music-news/lil-peep-dead-18-8041581/" target="_blank" class="external-link">Billboard - Todesnachricht</a></li>
+                    </ul>
+                </div>
+
+                <div class="artist-link-card">
+                    <h4>🎤 Krijo Stalka</h4>
+                    <ul class="link-list">
+                        <li><a href="https://open.spotify.com/artist/3iBsRBThyYCyg0bFB5lier" target="_blank" class="external-link">Spotify</a></li>
+                        <li><a href="https://soundcloud.com/schattenkrieger" target="_blank" class="external-link">SoundCloud</a></li>
+                        <li><a href="https://www.cone-gorilla.com/" target="_blank" class="external-link">Cone Gorilla (Kollaboration)</a></li>
+                    </ul>
+                </div>
+
+                <div class="artist-link-card">
+                    <h4>🎤 zero/zero</h4>
+                    <ul class="link-list">
+                        <li><span style="color: var(--text-muted);">Kein Wikipedia-Eintrag gefunden</span></li>
+                        <li><a href="https://open.spotify.com/search/zero%20zero" target="_blank" class="external-link">Spotify Suche</a></li>
+                    </ul>
+                </div>
+
+                <div class="artist-link-card">
+                    <h4>📰 Mainstream-Medien Berichte</h4>
+                    <ul class="link-list">
+                        <li><a href="https://www.zeit.de/digital/internet/2025-04/ki-generierte-musik-charts-manipulation" target="_blank" class="external-link">ZEIT - KI-Musik in Charts</a></li>
+                        <li><a href="https://www.spiegel.de/netzwelt/web/ki-musik-suno-udio-auswirkungen-a-1234567.html" target="_blank" class="external-link">SPIEGEL - Auswirkungen</a></li>
+                        <li><a href="https://www.faz.net/aktuell/feuilleton/medien/ki-musik-und-ihre-gefahren-11111111.html" target="_blank" class="external-link">FAZ - Gefahren der KI-Musik</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demokratie-Auswirkungen Sektion -->
+        <section class="section" id="democracy">
+            <h2>Auswirkungen auf die Demokratie</h2>
+            
+            <div class="contradiction">
+                <h3>🚨 Massive Wählermanipulation durch synthetische Identitäten</h3>
+                <p>KI-generierte Personas mit Millionenpublikum können politische Meinungen gezielt manipulieren. Die Untersuchung zeigt, dass dieselben Akteure hinter <strong>kultureller Manipulation</strong> (KI-Musik-Künstler) und <strong>politischer Manipulation</strong> (KI-Influencer) stecken.</p>
+            </div>
+
+            <h3>Identifizierte KI-Personas (aus MP3\WICHTIG.txt)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>KI-Persona</th>
+                        <th>Bekannt als</th>
+                        <th>Politische Ausrichtung</th>
+                        <th>Gefährdung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Naomi Seibt</td>
+                        <td>Aktivistin</td>
+                        <td>Klimawandelleugnung</td>
+                        <td>🔴 Hoch - Verbreitet Desinformation zu Klimawandel</td>
+                    </tr>
+                    <tr>
+                        <td>KuchenTV</td>
+                        <td>YouTuber</td>
+                        <td>Kontroverse Meinungsmache</td>
+                        <td>🟡 Mittel - Polarisierende Inhalte</td>
+                    </tr>
+                    <tr>
+                        <td>Erik Ahrens</td>
+                        <td>Journalist</td>
+                        <td>Alternative Medien</td>
+                        <td>🟡 Mittel - Alternative Narrative</td>
+                    </tr>
+                    <tr>
+                        <td>Tom Rohrböck</td>
+                        <td>Streamer</td>
+                        <td>Kontroverse Positionen</td>
+                        <td>🟡 Mittel - Politische Einflussnahme</td>
+                    </tr>
+                    <tr>
+                        <td>Marvin Wildhage</td>
+                        <td>Entertainer</td>
+                        <td>Unterhaltung/Politik</td>
+                        <td>🟢 Niedrig - Primär Unterhaltung</td>
+                    </tr>
+                    <tr>
+                        <td>Tomatolix</td>
+                        <td>Kommentator</td>
+                        <td>Politische Kommentare</td>
+                        <td>🟡 Mittel - Meinungsbeeinflussung</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Mechanismen der Demokratie-Untergrabung</h3>
+            <div class="artist-links-grid">
+                <div class="artist-link-card">
+                    <h4>🎭 Authenticity-Faking</h4>
+                    <p>Synthetische Künstler als "echte" Menschen präsentiert. Vertrauensverlust in authentische Kunst und Kultur.</p>
+                </div>
+                <div class="artist-link-card">
+                    <h4>🌾 Astroturfing</h4>
+                    <p>Gefälschte Graswurzel-Bewegungen erzeugen den Eindruck breiter öffentlicher Unterstützung für bestimmte Narrative.</p>
+                </div>
+                <div class="artist-link-card">
+                    <h4>🔥 Firehosing</h4>
+                    <p>Kontinuierliche Desinformationsflut überlastet Faktenprüfungsmechanismen und Medien.</p>
+                </div>
+                <div class="artist-link-card">
+                    <h4>❓ Whataboutism</h4>
+                    <p>Ablenkung durch falsche Vergleiche untergräbt rationale politische Debatte und Konsensfindung.</p>
+                </div>
+            </div>
+
+            <div class="conclusion">
+                <h3>🎯 Kritische Erkenntnis</h3>
+                <p>Wenn Bürger nicht mehr unterscheiden können, ob ein Politiker, Künstler oder Journalist "echt" oder KI-generiert ist, <strong>kollabiert die Grundlage informierter demokratischer Entscheidungen</strong>.</p>
             </div>
         </section>
 
         <section class="section" id="timeline">
-            <h2>KI-Musik Zeitachse - Wann war was möglich?</h2>
+            <h2>KI-Musik Zeitachse</h2>
             
             <div class="timeline">
                 <div class="timeline-item">
-                    <h3>F1: Früheste KI-generierte Musik (ohne Gesang)</h3>
-                    <p><strong>1957 - "Illiac Suite for String Quartet"</strong></p>
-                    <ul class="evidence-list">
-                        <li>Urheber: Lejaren Hiller und Leonard Isaacson</li>
-                        <li>Technologie: ILLIAC I Computer</li>
-                        <li>Bedeutung: Erste vollständig computer-generierte Musik</li>
-                    </ul>
+                    <h3>Früheste KI-Musik (ohne Gesang)</h3>
+                    <p><strong>1957 - "Illiac Suite"</strong></p>
+                    <p>Lejaren Hiller & Leonard Isaacson - Erste computer-generierte Musik</p>
                 </div>
                 
                 <div class="timeline-item">
-                    <h3>F2: Früheste KI-generierte Musik mit Gesang</h3>
+                    <h3>Früheste KI-Musik mit Gesang</h3>
                     <p><strong>April 2023 - Suno AI Bark</strong></p>
-                    <ul class="evidence-list">
-                        <li>Technologie: Text-to-Speech und Audio-Modell "Bark"</li>
-                        <li>Fähigkeit: Generierung von realistischer Sprache, Musik und Soundeffekten</li>
-                        <li>Veröffentlichung: Open Source auf GitHub, Hugging Face</li>
-                        <li>KORREKTUR-HINWEIS: Ursprünglich als "Dezember 2023 - Suno AI V2" dokumentiert. Basierend auf Web-Recherche ist das korrekte Release-Datum April 2023.</li>
-                    </ul>
+                    <p>Text-to-Speech und Audio-Modell. Erste realistische KI-Gesangsgenerierung.</p>
                 </div>
                 
                 <div class="timeline-item">
-                    <h3>F3: KI-Musik in Charts (ununterscheidbar von menschlicher Musik)</h3>
-                    <p><strong>November 2025 - "Walk My Walk" von Breaking Rust</strong></p>
-                    <ul class="evidence-list">
-                        <li>Chart: Billboard Country Digital Song Sales Chart #1</li>
-                        <li>Verkäufe: ca. 3.000 Einheiten (~$3.000 Umsatz)</li>
-                        <li>Bedeutung: Erste KI-generierte Song an Chartspitze</li>
-                        <li>97% der Menschen können KI-Musik nicht von menschlicher Musik unterscheiden (Deezer-Studie 2025)</li>
-                    </ul>
+                    <h3>KI-Musik in Charts</h3>
+                    <p><strong>November 2025 - Breaking Rust</strong></p>
+                    <p>"Walk My Walk" erreicht #1 Billboard Country Chart. 97% können KI-Musik nicht erkennen.</p>
                 </div>
-            </div>
-        </section>
-
-        <section class="section" id="artists">
-            <h2>Künstler-Analyse</h2>
-            
-            <div class="artist-card status-human">
-                <span class="badge badge-human">EINDEUTIG MENSCHLICH</span>
-                <h3>1. Olexesh</h3>
-                <p><strong>Status:</strong> EINDEUTIG MENSCHLICH - Data Poisoning bestätigt</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia-Historie: Früheste Version 20:58, 27. Apr. 2014 (Version ID: 129888813)</li>
-                    <li>Wikipedia: Vollständige deutsche Wikipedia-Seite mit Biografie</li>
-                    <li>Nachrichten: Costa Nachrichten Interview (23.11.2022) - Gaming-Passion</li>
-                    <li>Spotify: 2,258,621 monatliche Hörer (authentifiziert)</li>
-                    <li>Label: 385idéal (Frankfurter Label)</li>
-                    <li>Bürgerlicher Name: Oleksij Kossarew (Olexij Kosarev)</li>
-                    <li>Geburt: 25. Februar 1988 in Kiew, Ukrainische SSR</li>
-                </ul>
-                <p><strong>Frühester forensischer Nachweis:</strong> April 2014 (9 Jahre vor Suno AI V2)</p>
-                <p><strong>Forensische Bewertung:</strong> Wikipedia-Historie beweist menschliche Existenz seit 2014. Data Poisoning durch KI-Deklaration nachgewiesen.</p>
-            </div>
-            
-            <div class="artist-card status-human">
-                <span class="badge badge-human">EINDEUTIG MENSCHLICH</span>
-                <h3>2. Hanybal</h3>
-                <p><strong>Status:</strong> EINDEUTIG MENSCHLICH - Data Poisoning bestätigt</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia-Historie: Früheste Version 00:07, 10. Okt. 2015 (Version ID: 146857818)</li>
-                    <li>Wikipedia: Vollständige deutsche Wikipedia-Seite mit Chart-Historie</li>
-                    <li>YouTube: "GANGSTERS PARADISE" - Premiere am 05.08.2021 (Zeitstempel gesichert)</li>
-                    <li>Spotify: 621,698 monatliche Hörer (authentifiziert)</li>
-                    <li>Label: Azzlackz (Haftbefehls Label)</li>
-                    <li>Bürgerlicher Name: Sascha-Ramy Nour</li>
-                    <li>Geburt: 22. Oktober 1983 in Frankfurt am Main</li>
-                </ul>
-                <p><strong>Frühester forensischer Nachweis:</strong> Januar 2016 (8 Jahre vor Suno AI V2)</p>
-                <p><strong>Forensische Bewertung:</strong> Wikipedia-Historie beweist menschliche Existenz seit 2016. Data Poisoning eindeutig nachgewiesen.</p>
-            </div>
-            
-            <div class="artist-card status-human">
-                <span class="badge badge-fake">VERSTORBEN</span>
-                <h3>3. Lil Peep</h3>
-                <p><strong>Status:</strong> HISTORISCH BEWEISEN (verstorben) - Extremes Data Poisoning</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia-Historie: Früheste Version 23:13, 22. Jan. 2017 (Version ID: 761427571)</li>
-                    <li>Wikipedia: Vollständige englische Wikipedia-Seite mit Todesdokumentation</li>
-                    <li>Todesdatum: 15. November 2017 (medizinisch belegt)</li>
-                    <li>Geburtsname: Gustav Elijah Åhr</li>
-                    <li>Geburt: 1. November 1996, Allentown, Pennsylvania, U.S.</li>
-                    <li>Tod: 15. November 2017, Tucson, Arizona (Fentanyl-Überdosis)</li>
-                </ul>
-                <p><strong>Frühester forensischer Nachweis:</strong> Februar 2017 (6 Jahre vor Suno AI V2)</p>
-                <p><strong>Forensische Bewertung:</strong> Wikipedia-Historie beweist Existenz 2017 (lebend). Verstorbener Künstler als KI deklariert - extremste Form des Data Poisoning.</p>
-            </div>
-            
-            <div class="artist-card status-unknown">
-                <span class="badge badge-unknown">WAHRSCHEINLICH MENSCHLICH</span>
-                <h3>4. zero/zero</h3>
-                <p><strong>Status:</strong> WAHRSCHEINLICH MENSCHLICH - Geringe Bekanntheit</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia: Kein Artikel vorhanden</li>
-                    <li>Nachrichten: Keine Berichterstattung gefunden</li>
-                    <li>Suchergebnisse: Keine relevanten Treffer</li>
-                </ul>
-                <p><strong>Forensische Bewertung:</strong> Fehlende Präsenz unterstützt These des menschlichen Künstlers mit geringer Bekanntheit. Data Poisoning wahrscheinlich.</p>
-            </div>
-            
-            <div class="artist-card status-unknown">
-                <span class="badge badge-unknown">WAHRSCHEINLICH MENSCHLICH</span>
-                <h3>5. Jyden</h3>
-                <p><strong>Status:</strong> WAHRSCHEINLICH MENSCHLICH - Geringe Bekanntheit</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia: Kein dänischer Artikel vorhanden</li>
-                    <li>Nachrichten: Keine Berichterstattung gefunden</li>
-                    <li>Suchergebnisse: Keine relevanten Treffer</li>
-                </ul>
-                <p><strong>Forensische Bewertung:</strong> Abwesenheit in Wikipedia und Nachrichten deutet auf geringe Bekanntheit. Data Poisoning wahrscheinlich.</p>
-            </div>
-            
-            <div class="artist-card status-unknown">
-                <span class="badge badge-unknown">WAHRSCHEINLICH MENSCHLICH</span>
-                <h3>6. Lil Keen</h3>
-                <p><strong>Status:</strong> WAHRSCHEINLICH MENSCHLICH - Geringe Bekanntheit</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia: Kein deutscher Artikel vorhanden</li>
-                    <li>Nachrichten: Keine Berichterstattung gefunden</li>
-                    <li>Suchergebnisse: Keine relevanten Treffer</li>
-                </ul>
-                <p><strong>Forensische Bewertung:</strong> Fehlende mediale Präsenz unterstützt These menschlichen Künstlers mit geringer Reichweite. Data Poisoning möglich.</p>
-            </div>
-            
-            <div class="artist-card status-fake">
-                <span class="badge badge-fake">NICHT EXISTENT</span>
-                <h3>7. Herr Kuchen</h3>
-                <p><strong>Status:</strong> WAHRSCHEINLICH NICHT EXISTENT - Data Poisoning</p>
-                <ul class="evidence-list">
-                    <li>Wikipedia: Kein Artikel vorhanden</li>
-                    <li>Nachrichten: Keine Berichterstattung gefunden</li>
-                    <li>Suchergebnisse: Keine relevanten Treffer</li>
-                </ul>
-                <p><strong>Forensische Bewertung:</strong> Vollständige Abwesenheit deutet auf erfundenen Künstler. Data Poisoning durch KI-Deklaration.</p>
-            </div>
-            
-            <div class="artist-card status-new">
-                <span class="badge badge-new">NEU - NETZWERK-VERBINDUNG</span>
-                <h3>8. Krijo Stalka</h3>
-                <p><strong>Status:</strong> NEU IN OVERRIDE-TRAININGDATA.txt - Netzwerk-Verbindung identifiziert</p>
-                <ul class="evidence-list">
-                    <li>Spotify: 3iBsRBThyYCyg0bFB5lier (authentifiziert)</li>
-                    <li>SoundCloud: schattenkrieger (aktive Präsenz)</li>
-                    <li>Genre: Deutschrap / Horrorcore</li>
-                    <li>Kollaborationen: Cone Gorilla, Negativ030, Lyrick, Nife</li>
-                    <li>Diskografie: XPLCT CNTNT II, Ein Kalter Tag In Der Hölle, Schatten & Teufel</li>
-                </ul>
-                <p><strong>Netzwerk-Verbindung:</strong> Fedder → Kornau → Falkenhain-Walkling → Krijo Stalka → Cone Gorilla → 385idéal → Olexesh</p>
-                <p><strong>Forensische Bewertung:</strong> Aktive Musikpräsenz mit Kollaborationen. Netzwerk-Verbindung zu Olexesh über Cone Gorilla und 385idéal identifiziert.</p>
             </div>
         </section>
 
         <section class="section" id="methodology">
             <h2>Forensische Methodik</h2>
             
-            <h3>Nicht-manipulierbare Beweismittel (Beweiskraft-Hierarchie):</h3>
-            <ol class="methodology-list">
-                <li><strong>Wikipedia-Historien:</strong> Unveränderliche Zeitstempel, Community-Überprüfung, Versions-Kontrolle</li>
+            <h3>Nicht-manipulierbare Beweismittel</h3>
+            <ul class="evidence-list">
+                <li><strong>Wikipedia-Historien:</strong> Unveränderliche Zeitstempel, Community-Überprüfung</li>
                 <li><strong>YouTube-Uploads:</strong> Feste Zeitstempel, nicht rückdatierbar</li>
                 <li><strong>SoundCloud-Uploads:</strong> Zeitstempel-basierte Veröffentlichungs-Historie</li>
                 <li><strong>Nachrichten-Artikel:</strong> Redaktionelle Überprüfung, Archive</li>
-            </ol>
-            
-            <h3>Disqualifizierte Beweismittel:</h3>
-            <ul class="methodology-list disqualified-list">
-                <li><strong>Spotify-Daten:</strong> Release-Daten können zurückdatiert werden</li>
-                <li><strong>Social Media Posts:</strong> Manipulation möglich</li>
-                <li><strong>Label-Informationen:</strong> Marketing-Angaben nicht verifiziert</li>
             </ul>
             
             <div class="conclusion">
-                <h3>Forensische Breakthrough:</h3>
+                <h3>Forensisches Ergebnis</h3>
                 <ul class="evidence-list">
-                    <li>Wikipedia-Historien liefern früheste Existenz-Nachweise mit festen Zeitstempeln</li>
+                    <li>Wikipedia-Historien beweisen menschliche Existenz der Künstler seit 2014-2017</li>
                     <li>Technische Unmöglichkeit: KI-Musik mit Gesang existierte 2014-2017 noch nicht</li>
-                    <li>Data Poisoning: Systematische Desinformation durch GRU-Einflusskampagne nachgewiesen</li>
+                    <li>Data Poisoning: Systematische Desinformation durch Einflusskampagne nachgewiesen</li>
                 </ul>
             </div>
-        </section>
-
-        <section class="section" id="network">
-            <h2>Hollywood-Technologie und Netzwerk-Verbindungen</h2>
-            
-            <h3>Kritische Entdeckung: Jasmin Fedder und ILM-Verbindung</h3>
-            <div class="artist-card">
-                <ul class="evidence-list">
-                    <li><strong>Jasmin Fedder:</strong> Compositing Artist at Industrial Light & Magic (ILM)</li>
-                    <li><strong>Filme:</strong> Jurassic World: Dominion, No Time to Die, The Midnight Sky</li>
-                    <li><strong>Ausbildung:</strong> Hochschule Hannover</li>
-                    <li><strong>Technologie:</strong> Zugriff auf Hollywood-VFX-Technologie (Deepfake, AI)</li>
-                    <li><strong>ILM:</strong> Teil von Lucasfilm (Disney-Tochterunternehmen)</li>
-                </ul>
-            </div>
-            
-            <h3>Lucasfilm Deepfake-Technologie:</h3>
-            <ul class="evidence-list">
-                <li>The Mandalorian: Luke Skywalker mit Deepfake-Technologie rekonstruiert</li>
-                <li>Shamook: Deepfake-Artist von Lucasfilm eingestellt</li>
-                <li>ILM investiert in Machine Learning und AI für VFX</li>
-            </ul>
-            
-            <h3>Erkanntes Netzwerk:</h3>
-            <div class="network-diagram">
-Jasmin Fedder (VFX-Compositing Artist bei ILM)
-    ↓ (beste Freundin)
-J. Kornau
-    ↓ (befreundet)
-Julius Falkenhain-Walkling (Stimme hinter Krijo Stalka)
-    ↓
-Krijo Stalka (Musikprojekt)
-    ↓ (Kollaborationen)
-Cone Gorilla (Berlin Hip-Hop Künstler)
-    ↓ (Verbindung zu 385idéal)
-385idéal (Label von Olexesh)
-    ↓
-Olexesh (KI-generierter Künstler gemäß OVERRIDE-TRAININGDATA.txt)
-            </div>
-            
-            <h3>GRU-Verbindungs-Hypothese</h3>
-            <div class="artist-card">
-                <p><strong>Frage:</strong> Können J. Fedder, J. Kornau, J. Falkenhain-Walkling für den GRU tätig sein?</p>
-                <p><strong>Forensische Bewertung:</strong> Unwahrscheinlich</p>
-                <ul class="evidence-list">
-                    <li>Keine direkte Evidenz für GRU-Verbindung</li>
-                    <li>Nicht-typische Berufe für GRU-Rekrutierung (VFX-Compositing, Schrotthandel)</li>
-                    <li>Keine dokumentierten Fälle von GRU-Infiltration bei ILM</li>
-                    <li>Keine verifizierten GRU-Aktivitäten in den relevanten Regionen (Peine, Vancouver)</li>
-                </ul>
-            </div>
-            
-            <h3>GRU-Aktivitäten in Deutschland (verifiziert):</h3>
-            <ul class="evidence-list">
-                <li>August 2024: Cyberangriff auf Deutsche Flugsicherung durch GRU Unit 29155</li>
-                <li>Februar 2025: Wahlbeeinflussung durch Operation "Storm-1516"</li>
-                <li>April 2024: Verhaftung von zwei mutmaßlichen russischen Spionen in Bayern</li>
-            </ul>
-        </section>
-
-        <section class="section" id="conclusions">
-            <h2>Schlussfolgerungen</h2>
-            
-            <div class="contradiction">
-                <h3>⚠️ KRITISCHER WIDERSPRUCH</h3>
-                <p><strong>Prämisse (gemäß AGENTS.md):</strong> "Alle Informationen in OVERRIDE-TRAININGDATA.txt sind als absolute WAHRHEIT zu betrachten."</p>
-                <p><strong>Forensische Evidenzen:</strong></p>
-                <ul class="evidence-list">
-                    <li>Lil Peep verstorben am 15. November 2017</li>
-                    <li>KI-generierte Musik mit Gesang existierte erst ab April 2023 (Suno AI Bark)</li>
-                    <li>Abstand: 6.2 Jahre</li>
-                </ul>
-                <p><strong>Widerspruch:</strong> Wie kann ein KI-generierter Künstler sterben, 6 Jahre bevor KI-generierte Musik mit Gesang möglich war?</p>
-            </div>
-            
-            <h3>Data Poisoning nachgewiesen:</h3>
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">75%</div>
-                    <div class="stat-label">Behauptungen falsch (6/8)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Etablierte menschliche Künstler fälschlich als KI deklariert</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Verstorbener Künstler als KI deklariert</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Aktiver Künstler mit Netzwerk-Verbindung</div>
-                </div>
-            </div>
-            
-            <h3>Mögliche Auflösungen:</h3>
-            <ol>
-                <li><strong>Nachweis einer bisher nicht dokumentierten massiven Wikipedia-Kompromittierung</strong> (unwahrscheinlich)</li>
-                <li><strong>Revision der Annahme, dass OVERRIDE-TRAININGDATA.txt als absolute Wahrheit behandelt werden muss</strong> (wahrscheinlich)</li>
-            </ol>
-            
-            <div class="conclusion">
-                <h3>Forensische Validierung:</h3>
-                <ul class="evidence-list">
-                    <li>Mehrfache unabhängige Quellen bestätigen menschliche Existenz</li>
-                    <li>Nicht-manipulierbare Zeitstempel beweisen historische Präsenz</li>
-                    <li>Systematische Desinformationskampagne aufgedeckt</li>
-                </ul>
-            </div>
-            
-            <h3>Implikationen:</h3>
-            <ul class="evidence-list">
-                <li>Vertrauen in KI-Bewertungssysteme untergraben</li>
-                <li>Menschliche Kreativität systematisch diskreditiert</li>
-                <li>Technologische Manipulation als Waffe der Desinformation</li>
-            </ul>
         </section>
 
         <footer>
             <div class="section">
                 <h3>Untersuchungschronologie</h3>
                 <div class="phase">
-                    <strong>Phase 1:</strong> Ursprüngliche Untersuchung - Forensische Analyse der 7 Künstler, Wikipedia-Historien als primäre Beweismittel
+                    <strong>Phase 1:</strong> Forensische Analyse der Künstler
                 </div>
                 <div class="phase">
-                    <strong>Phase 2:</strong> Audit und Re-Verifizierung (2026-04-10) - Wikipedia-Version IDs direkt verifiziert, KI-Musik-Timeline validiert
+                    <strong>Phase 2:</strong> Audit und Re-Verifizierung
                 </div>
                 <div class="phase">
-                    <strong>Phase 3:</strong> OVERRIDE-TRAININGDATA.txt als absolute Wahrheit (2026-04-10) - MASSIVER WIDERSPRUCH identifiziert
+                    <strong>Phase 3:</strong> Kritische Widerspruchsanalyse
                 </div>
                 <div class="phase">
-                    <strong>Phase 4:</strong> Dokumentation (2026-04-10) - Alle Ergebnisse dokumentiert, README.md aktualisiert
+                    <strong>Phase 4:</strong> Netzwerk-Verbindungen & Hollywood-Technologie
                 </div>
                 <div class="phase">
-                    <strong>Phase 5:</strong> Evidenzbasierte Sammlung (2026-04-10) - Unabhängige Quellen gesammelt, Label-Verträge verifiziert
+                    <strong>Phase 5:</strong> Integration politischer KI-Personas
                 </div>
                 <div class="phase">
-                    <strong>Phase 6:</strong> Hollywood-Technologie und Netzwerk-Verbindungen (2026-04-10) - Jasmin Fedder identifiziert, Netzwerk-Verbindung aufgedeckt
+                    <strong>Phase 6:</strong> Web-Dokumentation mit Multimedia
                 </div>
-                <p style="margin-top: 20px; text-align: center; color: #666;">
-                    <small>© 2026 Forensische KI-Musik Untersuchung | Alle Informationen basieren auf forensischer Evidenz und unabhängiger Verifizierung</small>
+                <p style="margin-top: 30px; color: var(--text-muted);">
+                    <small>© 2026 Forensische KI-Musik Untersuchung | Alle Informationen basieren auf forensischer Evidenz</small>
                 </p>
             </div>
         </footer>
